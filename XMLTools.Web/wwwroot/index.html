@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XML Duplicate Finder and Remover</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div class="background-orb orb-a"></div>
+    <div class="background-orb orb-b"></div>
+
+    <header class="hero card">
+      <div class="hero-copy">
+        <p class="eyebrow">XML Utility Studio</p>
+        <h1>XML Duplicate Finder and Remover</h1>
+        <p class="hero-text">Upload an XML file, inspect it in a formatted tree, highlight duplicate sibling nodes, remove them, and download the cleaned result.</p>
+      </div>
+
+      <div class="hero-actions">
+        <label class="primary-button upload-button" for="xmlFileInput">Upload XML file</label>
+        <input id="xmlFileInput" type="file" accept=".xml,text/xml,application/xml" hidden />
+        <button id="removeDuplicatesButton" class="secondary-button" type="button" disabled>Remove duplicates</button>
+        <button id="downloadButton" class="secondary-button" type="button" disabled>Download cleaned XML</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="sidebar">
+        <article class="card panel">
+          <div class="panel-header">
+            <h2>File upload</h2>
+            <span id="statusBadge" class="status-badge idle">No file loaded</span>
+          </div>
+
+          <div id="dropzone" class="dropzone">
+            <div class="dropzone-copy">
+              <strong>Drop an XML file here</strong>
+              <span>or use the upload button above</span>
+            </div>
+          </div>
+
+          <dl class="meta-list">
+            <div>
+              <dt>File</dt>
+              <dd id="fileName">Waiting for upload</dd>
+            </div>
+            <div>
+              <dt>Root node</dt>
+              <dd id="rootName">-</dd>
+            </div>
+            <div>
+              <dt>Document size</dt>
+              <dd id="fileSize">-</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="card panel">
+          <div class="panel-header">
+            <h2>Duplicate statistics</h2>
+            <span id="analysisSummary" class="status-badge muted">Awaiting analysis</span>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span>Total elements</span>
+              <strong id="totalElements">0</strong>
+            </div>
+            <div class="stat-card">
+              <span>Duplicate groups</span>
+              <strong id="duplicateGroups">0</strong>
+            </div>
+            <div class="stat-card">
+              <span>Duplicate nodes</span>
+              <strong id="duplicateNodes">0</strong>
+            </div>
+            <div class="stat-card">
+              <span>Removed nodes</span>
+              <strong id="removedNodes">0</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="card panel notes-panel">
+          <h2>How duplicates are detected</h2>
+          <p>This app compares each element against its sibling elements using tag name, attributes, text content, and child structure. Matching duplicate siblings are highlighted and the first copy is kept during cleanup.</p>
+        </article>
+      </section>
+
+      <section class="content">
+        <article class="card viewer-card">
+          <div class="panel-header">
+            <h2>Formatted XML viewer</h2>
+            <span id="viewerState" class="status-badge muted">Original file</span>
+          </div>
+          <div id="xmlViewer" class="xml-viewer empty-state">
+            Load an XML file to see a structured, highlighted tree view.
+          </div>
+        </article>
+
+        <article class="card preview-card">
+          <div class="panel-header">
+            <h2>Cleaned XML preview</h2>
+            <span id="cleanedState" class="status-badge muted">Not generated yet</span>
+          </div>
+          <pre id="cleanedPreview" class="xml-preview empty-state">Remove duplicates to generate a cleaned XML preview.</pre>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
