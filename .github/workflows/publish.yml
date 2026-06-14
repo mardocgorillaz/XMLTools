@@ -1,0 +1,35 @@
+name: Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore XMLTools.sln
+
+      - name: Build solution
+        run: dotnet build XMLTools.sln --configuration Release --no-restore
+
+      - name: Publish app
+        run: dotnet publish XMLTools.Web/XMLTools.Web.csproj --configuration Release --output publish --no-build
+
+      - name: Upload published app
+        uses: actions/upload-artifact@v4
+        with:
+          name: xmltools-web-publish
+          path: publish
